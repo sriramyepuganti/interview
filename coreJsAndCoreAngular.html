@@ -1,0 +1,603 @@
+<style>
+    .box {
+        width: 800px;
+        font-size: 20px;
+    }
+</style>
+<div class="box">
+    <ul>
+        <li>Minification - It simply means all the unnecessary white spaces and redundant optional tokens will be
+            removed.
+
+            Example - self.description = 'Hello'
+            Minified version will be - self.description='Hello'
+
+        </li>
+        <li>
+            Uglification - It simply means converting the code in such a format that core logic can't be understand
+            easily. To do the same it renames the variable and their references, it renames the parameter with shorter
+            name etc.It simply obfuscate the business logic so that no one can easily understands it.
+
+            Example -
+
+            self.description = 'Hello';
+            function(self.description){}
+            Uglified version will be -
+
+            j.description = 'Hello';
+            function(j.description){}
+        </li>
+    </ul>
+</div>
+<h1>file.js.map and file.min.js</h1>
+<div class="box">
+    <ul>
+        <li>Source maps create a map from these compressed asset files back to the source files.</li>
+        <li>One of the easiest performance wins you can gain for your website is to combine and compress your JavaScript
+            and CSS files. But what happens when you need to debug the code within those compressed files? It can be a
+            nightmare. Fear not however, there is a solution on the horizon and it goes by the name of source maps.</li>
+
+        <li> A source map provides a way of mapping code within a compressed file back to it’s original position in a
+            source file. This means that – with the help of a bit of software – you can easily debug your applications
+            even after your assets have been optimized. The Chrome and Firefox developer tools both ship with built-in
+            support for source maps.</li>
+
+        <li>In this blog post you’re going to learn how source maps work and take a look at how to generate them. We’re
+            going to be focussing primarily on source maps for JavaScript code but the principles apply to CSS source
+            maps too.</li>
+    </ul>
+</div>
+<h1>Compilers vs Interpreter</h1>
+<table style="border:1">
+    <tr>
+        <th>Interpreter</th>
+        <th>Compiler</th>
+    </tr>
+    <tr>
+        <td>Translates program one statement at a time.</td>
+        <td>Scans the entire program and translates it as a whole into machine code.</td>
+    </tr>
+    <tr>
+        <td>Interpreters usually take less amount of time to analyze the source code. However, the overall execution
+            time is comparatively slower than compilers.</td>
+        <td>Compilers usually take a large amount of time to analyze the source code. However, the overall execution
+            time is comparatively faster than interpreters.</td>
+    </tr>
+
+    <tr>
+        <td>No intermediate object code is generated, hence are memory efficient.</td>
+        <td>Generates intermediate object code which further requires linking, hence requires more memory.</td>
+    </tr>
+
+    <tr>
+        <td>Programming languages like JavaScript, Python, Ruby use interpreters.</td>
+        <td>Programming languages like C, C++, Java use compilers.</td>
+    </tr>
+
+</table>
+
+<h1>just in time (jit)</h1>
+<div class="box">every browser and runtime in general probably implements their own version of a JIT compiler, but the
+    theory and the structure are usually the same across the board</div>
+<h1>Event loop</h1>
+<div class="box">Just a note: you can actually make synchronous Ajax requests. Never, ever do that. If you make a
+    synchronous Ajax request, the UI of your JavaScript app will be blocked — the user won’t be able to click, enter
+    data, navigate, or scroll. This would prevent any user interaction. It’s a terrible practice.</div>
+<div class="box">jQuery.ajax({
+    url: 'https://api.example.com/endpoint',
+    success: function(response) {
+    // This is your callback.
+    },
+    async: false // And this is a terrible idea
+    });</div>
+<div class="box" style="height: 400px;">
+    <div>call stack is for excuting sync functions. whenver it get async opertions like callback,timers, http,fetch it will be moved to web api</div>
+    <div>web api register this functions</div>
+    <div>if functions in web register api are done with time it will be moved to call back queue or event queue</div>
+    <div> call back functions related to promises will be move to microtask queue. it has high priroty then call backqueu</div>
+    <div>event loop will have eye on call stack and event queue or callback queue and microtask queue</div>
+    <div>once call stack is empty event loop will move the functions in callback queue to call stack</div>
+    <img src="https://miro.medium.com/max/276/1*FA9NGxNB6-v1oI2qGEtlRQ.png" alt="">
+</div>
+
+<h1>bind,call,apply</h1>
+<div class="box">
+    <ul>
+        <li> In js functions has this-> window object. If you want override THIS with custom object we have to use
+            bind,call,applly
+        </li>
+        <li>functionName.bind(object,a) -> returns function</li>
+        <li>functionName.call(obj,arg1,arg2) or functionName.apply(obj,[arg1,arg2])</li>
+    </ul>
+
+</div>
+
+<h1>closures</h1>
+<div class="box">
+    <ul>
+        <li>JavaScript variables can belong to the local or global scope.
+
+            Global variables can be made local (private) with closures.</li>
+        <li>A closure is a function having access to the parent scope, even after the parent function has closed.</li>
+    </ul>
+</div>
+
+<h1>iterators and generators</h1>
+<div class="box">
+    <ul>
+        <li>Iterable objects are a generalization of arrays. That’s a concept that allows us to make any object useable
+            in a for..of loop.
+
+            Of course, Arrays are iterable. But there are many other built-in objects, that are iterable as well. For
+            instance, strings are also iterable.
+
+        </li>
+        <li>Iterators and Generators bring the concept of iteration directly into the core language and provide a
+            mechanism for customizing the behavior of for...of loops.
+        </li>
+        <li>we can make objects iterable my using
+            let obj = {
+            [Symbol.iterator]: function*(){
+            yield: 1
+            }
+            }
+        </li>
+        <li>A generator is a function that can stop midway and then continue from where it stopped. In short, a
+            generator appears to be a function but it behaves like an iterator.</li>
+        <li>function* test(){
+            yield 1;
+            yield 2;
+            }
+            let c = test();
+            c.next(); or for(let k of c){ console.log(k)}
+        </li>
+    </ul>
+</div>
+<h1>POlyfill</h1>
+<div class="box">Polyfill
+    A polyfill is a piece of code (usually JavaScript on the Web) used to provide modern functionality on older browsers
+    that do not natively support it.
+</div>
+
+<h1>Transpilation</h1>
+<div class="box">
+    <ul>
+        <li>Transpilers, or source-to-source compilers, are tools that read source code written in one programming
+            language, and produce the equivalent code in another language. Languages you write that transpile to
+            JavaScript are often called compile-to-JS languages, and are said to target JavaScript.
+
+        </li>
+        <li>ex: webpack, babel</li>
+    </ul>
+</div>
+
+<h1>custom elements</h1>
+<div class="box">
+    <ul>
+        <li>customElements.define('name-format', className);</li>
+        <li>
+            <pre>
+            class className extents HTMLElement {
+                constructor() {
+                  // Always call super first in constructor
+                  super();
+              
+                  // write element functionality in here
+                  this.attachShadow({mode: 'open'});
+                  // attach the created elements to the shadow DOM
+                this.shadowRoot.append(style,element);
+
+                }
+              }
+        </pre>
+        </li>
+        <li>call backs: connectedCallback,disconnectedCallback, adoptedCallback, attributeChangedCallback</li>
+    </ul>
+</div>
+<h1>shadow dom</h1>
+<div class="box">
+    <ul>
+        <li>Shadow DOM is a new DOM feature that helps you build components. You can think of shadow DOM as a scoped
+            subtree inside your element</li>
+        <li>With the open mode you can access the Shadow DOM via the shadowRoot property of the HTML element.
+
+            With the closed mode you cannot. shadowRoot will return null.
+
+            You can use both modes for you want to achieve</li>
+    </ul>
+</div>
+<hr>
+<hr>
+<h1>Reactive programming in js</h1>
+<div class="box">
+    <ul>
+        <li>Reactive programming is programming with asynchronous data streams.</li>
+        <li>RxJS is a JavaScript library for transforming, composing and querying asynchronous streams of data. RxJS can
+            be used both in the browser or on the server-side using Node.js.</li>
+        <li>Observable: Observable is basically a function that can return a stream of values to an observer over time,
+            this can either be synchronously or asynchronously</li>
+        <li>observer: it is an object. An Observer is a consumer of values delivered by an Observable. Observers are
+            simply a set of callbacks
+            it has next,error,complete states</li>
+        <li>subscription: usually represents the execution of an Observable. It has the unsubscribe method which lets us
+            dispose of the resource held by the subscription when we’re done</li>
+        <li>Subject: A Subject is like an Observable, but can multicast to many Observers. Subjects are like
+            EventEmitters: they maintain a registry of many listeners.</li>
+        <li>Subjects are used for multicasting Observables. This means that Subjects will make sure each subscription
+            gets the exact same value as the Observable execution is shared among the subscribersu</li>
+        <li>
+            <pre>const subject = new Subject<number>();
+     
+                    subject.subscribe({
+                      next: (v) => console.log(`observerA: ${v}`)
+                    });
+                    subject.subscribe({
+                      next: (v) => console.log(`observerB: ${v}`)
+                    });
+                     
+                    subject.next(1);
+                    subject.next(2);
+                     
+                    // Logs:
+                    // observerA: 1
+                    // observerB: 1
+                    // observerA: 2
+                    // observerB: 2</pre>
+        </li>
+        <li>BehaviorSubject:
+            One of the variants of the Subject is the BehaviorSubject. The BehaviorSubject has the characteristic that
+            it stores the “current” value. This means that you can always directly get the last emitted value from the
+            BehaviorSubject.</li>
+        <li>
+            <pre>
+                    const subject = new Rx.BehaviorSubject();
+                    
+                    // subscriber 1
+                    subject.subscribe((data) => {
+                        console.log('Subscriber A:', data);
+                    });
+                    
+                    subject.next(1);
+                    subject.next(2);
+                    
+                    // subscriber 2
+                    subject.subscribe((data) => {
+                        console.log('Subscriber B:', data);
+                    });
+                    
+                    subject.next(3);
+                    
+                    console.log(subject.value)
+                    
+                    Subscriber A: undefined
+                    Subscriber A: 1
+                    Subscriber A: 2
+                    Subscriber B: 2
+                    Subscriber A: 3
+                    Subscriber B: 3</pre>
+        </li>
+        <li>ReplaySubject: is comparable to the BehaviorSubject in the way that it can send “old” values to new
+            subscribers</li>
+        <li>
+            <pre>
+                        const subject = new Rx.ReplaySubject(2);
+
+                    // subscriber 1
+                    subject.subscribe((data) => {
+                        console.log('Subscriber A:', data);
+                    });
+
+                    subject.next(1)
+                    subject.next(2)
+
+                    // subscriber 2
+                    subject.subscribe((data) => {
+                        console.log('Subscriber B:', data);
+                    });
+
+                    subject.next(3);
+                        Subscriber A: 1
+                        Subscriber A: 2
+                        Subscriber B: 1
+                        Subscriber B: 2
+                        Subscriber A: 3
+                        Subscriber B: 3
+                    </pre>
+        </li>
+        <li>While the BehaviorSubject and ReplaySubject both store values, the AsyncSubject works a bit different. The
+            AsyncSubject is aSubject variant where only the last value of the Observable execution is sent to its
+            subscribers. and only when the execution completes.</li>
+        <li>
+            <pre>
+            const subject = new Rx.AsyncSubject();
+
+            // subscriber 1
+            subject.subscribe((data) => {
+                console.log('Subscriber A:', data);
+            });
+
+            subject.next(1)
+            subject.next(2)
+
+            // subscriber 2
+            subject.subscribe((data) => {
+                console.log('Subscriber B:', data);
+            });
+            subject.complete();
+            subject.next(3);
+
+            Subscriber A: 2
+            Subscriber B: 2
+
+        </pre>
+        </li>
+        <li>Operators are an important part of RxJS. An operator is a pure function that takes in observable as input
+            and the output is also an observable.</li>
+        <li>let obs = of(1,2,3);</li>
+        <li>let obs = from([1,2,3]);</li>
+        <li>obs.pipe().subscribe()</li>
+    </ul>
+</div>
+<hr>
+<hr>
+<h1>ANGULAR JS FILES AFTER BUILD</h1>
+<div class="box">
+    The angular-cli is a great way to build your Angular app but what it does can be a mystery. What are those files it
+    generates?
+
+    Let’s see…
+    <ul>
+        <li>main.bundle.js
+            This is where the action happens. This file contains all your code.
+        </li>
+        <li> polyfills.bundle.js
+            are few lines of code which make your application compatible for different browsers. The code we write is
+            mostly in ES6(New Features: Overview and Comparison) and is not compatible with IE or firefox and needs some
+            environment setups before being able to be viewed or used in these browsers. </li>
+        <li>scripts.build.js
+            This one should also be self explanatory. It contains the scripts you declare in the scripts section of your
+            angular-cli.json file:
+        </li>
+        <li> runtime.js: runtime.js is the webpack loader. This file contains webpack utilities that are needed to load
+            other
+        </li>
+        <li>The style. js is all your css files that are included in your style array in angular. json</li>
+        <li> vendor.js This file contains any libraries imported into your app (app. module), including the Angular
+            libraries
+        </li>
+    </ul>
+</div>
+
+<h1>NG SERVE</h1>
+<div class="box">
+    <ul>
+        <li>ng serve-> builds and serves app, rebuilding on file changes.</li>
+        <li>does not write build and it builds artifacts from memory instead of faster development experience.</li>
+    </ul>
+</div>
+
+<h1>AOT VS JIT(just in time)</h1>
+
+<div class="box">
+    <ul>
+        <li>Just-in-Time (JIT), which compiles your app in the browser at runtime. This was the default until Angular 8.
+        </li>
+        <li>Ahead-of-Time (AOT), which compiles your app and libraries at build time. This is the default since Angular
+            9.</li>
+    </ul>
+    <table>
+        <tr>
+            <td>JIT</td>
+            <td>AOT</td>
+        </tr>
+        <tr>
+            <td>it creates js.map files</td>
+            <td>it creates js files</td>
+        </tr>
+        <tr>
+            <td>it is development purpose</td>
+            <td>it is production purpose</td>
+        </tr>
+        <tr>
+            <td>No tree shaking</td>
+            <td>tree shaking happens</td>
+        </tr>
+    </table>
+</div>
+
+<h1>Tree shaking</h1>
+<div class="box">
+    <ul>
+        <li>Tree shaking is the ability to remove any code that we are not actually using in our application from the
+            final bundle. It's one of the most effective techniques to reduce the footprint of an application.</li>
+    </ul>
+</div>
+
+<h1>IVY</h1>
+<div class="box">
+    <ul>
+        <li>Ivy stands for ‘IV’, 4 in roman numbers. The last rewrite was done in Angular 4.0</li>
+        <li>Angular view engine takes the templates and components we’ve written and translates them into regular HTML
+            and JavaScript that the browser can read and display.</li>
+        <li>"angularCompilerOptions": {
+            "enableIvy": true
+            }</li>
+        <li>it will reduce the bundle size</li>
+
+    </ul>
+</div>
+
+<h1>Decorators</h1>
+
+<div class="box">
+    <ul>
+        <li>Decorators are actually just functions, it’s as simple as that, and are called with whatever they are
+            decorating. A method decorator will be called with the value of the method it’s decorating, and a class
+            decorator will be called with the class to be decorated.</li>
+        <li>function Console(message) {
+            // access the "metadata" message
+            console.log(message);
+            // return a function closure, which
+            // is passed the class as `target`
+            return function(target) {
+            console.log('Our decorated class', target);
+            };
+            }
+
+            @Console('Hey!')
+            class ExampleClass {
+            constructor() {
+            console.log('Yo!');
+            }
+            }
+        </li>
+    </ul>
+</div>
+
+<h1>Dependency injection in Angular</h1>
+<div class="box">
+    <ul>
+        <li>Dependencies are services or objects that a class needs to perform its function. Dependency injection, or
+            DI, is a design pattern in which a class requests dependencies from external sources rather than creating
+            them.</li>
+    </ul>
+</div>
+
+<h1>Routing</h1>
+
+<div class="box">
+    <ul>
+        <li>PathLocationStrategy(default): This is the default strategy in Angular so we need to do nothing to enable
+            it.</li>
+        <li>It takes advantage of a relatively new HTML5 API called pushstate</li>
+        <li>By using pushstate we can change the URL and not have the browser request the page from the server and
+            without needing to use a hash fragment</li>
+    </ul>
+    <ul>
+        <li>HashLocationStrategy: So if your URL was https://codecraft.tv/contact/#/foo/moo/loo then the browser makes a
+            GET request to https://codecraft.tv/contact/ only.</li>
+        <li>syntax: RouterModule.forRoot(routes, {useHash: true})</li>
+        <li>Older browsers send page requests to the server when the location URL changes unless the change occurs after
+            a "#". Hash based client side routing took advantage of this exception by composing route URLs with hashes.
+        </li>
+        <li>It’s therefore an ideal solution for implementing client side routing:-</li>
+        <li>It can be programmatically changed via JavaScript</li>
+        <li>ex: localhost:4040/#/artist/1234/tracks => According to the the server there is only ever one URL
+            localhost:4040, the other hash fragment stuff is ignored by the server.</li>
+    </ul>
+    <ul>
+        <li>CanActivate: Checks to see if a user can visit a route. syntax: canActivate(route: ActivatedRouteSnapshot,
+            state: RouterStateSnapshot)</li>
+        <li> CanActivateChild: Checks to see if a user can visit a routes children. syntax: canActivateChild(childRoute:
+            ActivatedRouteSnapshot, state: RouterStateSnapshot)</li>
+        <li>CanDeactivate: Checks to see if a user can exit a route. syntax: canDeactivate(component: T, currentRoute:
+            ActivatedRouteSnapshot, currentState: RouterStateSnapshot, nextState?: RouterStateSnapshot)</li>
+        <li> CanLoad: Checks to see if a user can route to a module that lazy loaded. syntax: canLoad(route: Route,
+            segments: UrlSegment[])</li>
+        <li>Resolve: Performs route data retrieval before route activation. syntax: resolve(route:
+            ActivatedRouteSnapshot, state: RouterStateSnapshot)</li>
+
+
+    </ul>
+</div>
+
+<h1>API</h1>
+<div class="box">
+    <ul>
+        <li>import { HttpClientModule } from '@angular/common/http';
+        </li>
+        <li>import { HttpClient } from '@angular/common/http';</li>
+        <li>interceptors: Intercepts and handles an HttpRequest or HttpResponse</li>
+        <li>interface HttpInterceptor {
+            intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>
+                    }</li>
+        <li>
+            <pre>intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    
+            return next.handle(request).do((event: HttpEvent<any>) => {
+              if (event instanceof HttpResponse) {
+                // do stuff with response if you want
+              }
+            }, (err: any) => {
+              if (err instanceof HttpErrorResponse) {
+                if (err.status === 401) {
+                  // redirect to the login route
+                  // or show a modal
+                }
+              }
+            });</pre>
+        </li>
+    </ul>
+</div>
+
+<h1>error handling</h1>
+<div class="box">
+    <ul>
+        <li>Provides a hook for centralized exception handling.</li>
+        <li>
+            <pre>class MyErrorHandler implements ErrorHandler {
+            handleError(error) {
+              // do something with the exception
+            }
+          }
+          
+          @NgModule({
+            providers: [{provide: ErrorHandler, useClass: MyErrorHandler}]
+          })
+          class MyModule {}
+          </pre>
+        </li>
+    </ul>
+</div>
+
+<h1>change detection</h1>
+<div class="box">
+    <ul>
+        <li>Change Detection means updating the DOM whenever data is changed. Angular provides two strategies for Change
+            Detection.</li>
+        <li>Angular’s change detection is done in two steps, the first one is done by having the developer updating the
+            application model. He can do it by changing the property of a component or emitting an event. Then Angular’s
+            job will be to reflect the state of the model in the view, by re-rendering it. Usually this means that
+            Angular will update by sending an event and/or by property bindings.</li>
+        <li>There could be various reasons for Angular change detector to come into action and start traversing the
+            component tree. They are:
+
+        <li>Events fired such as button click, etc.</li>
+        <li>AJAX call or XHR requests.</li>
+        <li>Use of JavaScript timer functions such as setTimeOut , SetInterval.</li>
+        </li>
+        <li>default strategy: whenever any data is mutated or changed, Angular will run the change detector to update
+            the DOM</li>
+        <li>onPush strategy: Angular will only run the change detector when a new reference is passed to @Input() data.
+        </li>
+        <li>By using onPush Change Detection, Angular will only depend on the component’s inputs, events, markForCheck
+            method, or the use of the async pipe in the template</li>
+        <li><img src="https://www.mokkapps.de/e9c151a1260485a277c6928b5f19019b/cd-on-push-cycle.gif" width="200px"
+                height="200px" alt=""></li>
+        <li>cd.detectChanges() will run change detection right away from the current component down through its
+            descendants.
+        </li>
+        <li>ApplicationRef.tick() which triggers change detection for the whole application by respecting the change
+            detection strategy of a component</li>
+        <li>cd.markForCheck() will not run change detection, but mark its ancestors as needing to run change detection.
+            Next time any change detection happens, it will run also for those components which were marked</li>
+        <li><img src="https://www.mokkapps.de/static/208f64143869f05d2219a1e9735b9ab3/15ec7/change-detector-ref.jpg"
+                alt=""></li>
+    </ul>
+</div>
+
+<h1>track by</h1>
+<div class="box">
+    <ul>
+        <li>ngFor directive may perform poorly with large lists.</li>
+        <li>A small change to the list like, adding a new item or removing an existing item may trigger several DOM
+            manipulations.</li>
+        <li>to avoid this. use trackBy in ngFor</li>
+        <li>
+            <pre>The trackBy function takes the index and the current item as arguments and returns the unique identifier by which that item should be tracked. In our case, we are tracking by Employee code.
+            trackByEmpCode(index: number, employee: any): string {
+            return employee.code;
+            }</pre>
+        </li>
+    </ul>
+</div>

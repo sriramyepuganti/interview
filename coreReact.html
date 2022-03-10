@@ -1,0 +1,518 @@
+<div>
+    <h1>shaow dom: Shadow DOM is a browser technology designed primarily for scoping variables and CSS in web components
+    </h1>
+    <h1>virtua dom</h1>
+    <ul>
+        <li>virtual DOM is a lightweight JavaScript representation of the DOM</li>
+        <li>virtual DOM is a concept implemented by libraries in JavaScript on top of browser APIs</li>
+        <li>representation of a UI is kept in memory and synced with the “real” DOM by a library such as ReactDOM. This
+            process is called <strong>reconciliation</strong></li>
+    </ul>
+    <h1>Framework vs library</h1>
+    <ul>
+        <li>frameworks and libraries are reusable code written by someone else</li>
+        <li>The technical difference between a framework and library lies in a term called inversion of control.</li>
+        <li>When you use a library, you are in charge of the flow of the application. You are choosing when and where to
+            call the library. When you use a framework, the framework is in charge of the flow. It provides some places
+            for you to plug in your code, but it calls the code you plugged in as needed.</li>
+        <li>it should follow mvc pattern</li>
+    </ul>
+    <h1>jsx: JSX stands for JavaScript XML. JSX allows us to write HTML in React. JSX makes it easier to write and add
+        HTML in React</h1>
+    <ul>
+        <li>if you write like this <code>const tag = <h1>Hello</h1></code></li>
+        <li>the above one will be converted to const tag = React.createElement("h1", {id:'hello'}, "Hello")</li>
+    </ul>
+    <h1>React Fiber</h1>
+    <ul>
+        <li>Fiber is the new reconciliation engine in React 16. Its main goal is to enable incremental rendering of the
+            virtual DOM</li>
+        <li>The goal of React Fiber is to increase its suitability for areas like animation, layout, and gestures. Its
+            headline feature is incremental rendering: the ability to split rendering work into chunks and spread it out
+            over multiple frames.</li>
+    </ul>
+    <h1>React create Element:</h1>
+    <ul>
+        <li>it helps to create dom in vrtual dom</li>
+        <li>To create an element you call React.createElement</li>
+        <li>The first thing you need to tell it is the element you want to create (div, h1, p, span….)</li>
+        <li>The second is what attribute you want to add such as ‘id’ </li>
+        <li>third is the children of that element</li>
+        <li>
+            <pre>
+                const Test = React.createElement(
+                            'p',
+                            {id:'test'},
+                            'hello world'
+                            )
+                ReactDOM.render(Test,document.getElementById('#root'));
+                console.log(Test):# it will give virtual dom object
+            </pre>
+        </li>
+        <li>React Only Updates What’s Necessary
+        </li>
+        <li>React treats components starting with lowercase letters as DOM tags. For example,
+            <div /> represents an HTML div tag, but
+            <Welcome /> represents a component and requires Welcome to be in scope</li>
+    </ul>
+    <h1>The term “render prop” refers to a technique for sharing code between React components using a prop whose value
+        is a function.</h1>
+    <h1>React components</h1>
+    <ul>
+        <li>component is a JavaScript class or function that optionally accepts inputs i.e. properties(props) and
+            returns a React element that describes how a section of the UI (User Interface) should appear</li>
+        <li>we can create components by two ways:
+            <ul>
+                <li>class components</li>
+                <li>functional components</li>
+            </ul>
+        </li>
+        <li>
+            <pre>function Welcome(props) {
+                return <h1>Hello, {props.name}</h1>;
+              }</pre>
+        </li>
+        <li>
+            <pre>
+                class Welcome extends React.Component {
+                    render() {
+                      return <h1>Hello, {this.props.name}</h1>;
+                    }
+                  }
+            </pre>
+        </li>
+    </ul>
+    <h1>props</h1>
+    <ul>
+        <li>To get information to our component we add an attribute which in React we call a prop</li>
+        <li>they are immutable</li>
+        <li>All React components must act like pure functions with respect to their props</li>
+    </ul>
+    <h1>pure function: functions are called “pure” because they do not attempt to change their inputs, and always return
+        the same result for the same inputs</h1>
+    <ul>
+        <li>
+            <pre>function sum(a, b) {
+                return a + b;
+              }</pre>
+        </li>
+    </ul>
+    <h1>impure functions: this function is impure because it changes its own input</h1>
+    <ul>
+        <li>
+            <pre>function withdraw(account, amount) {
+                account.total -= amount;
+              }</pre>
+        </li>
+    </ul>
+    <h1>state:</h1>
+    <ul>
+        <li>State is a instance of a component that stores component's dynamic data and it enables a component to keep
+            track of changes</li>
+        <li>they are mutable</li>
+        <li>don't update state like this this.state.test = "some"</li>
+        <li>use setState() to update then only rerender will happen</li>
+        <li>
+            <pre>this.setState({data: data+1}) ot this.setState((state,props)=>({ data: data+1 }))</pre>
+        </li>
+    </ul>
+    <h1>PropTypes is React’s internal mechanism for adding type checking to components</h1>
+    <ul>
+        import PropTypes from 'prop-type';
+        Component.PropType = {
+            state: PropTYpe.number
+        }
+    </ul>
+    <h1>Hnadling events</h1>
+    <ul>
+        <li>&lt;div className="test"&gt;</li>
+        <li>&lt;button onClick={activateLasers}></li>
+        <li>Another difference is that you cannot return false to prevent default behavior in React. You must call
+            preventDefault explicitly</li>
+        <li>synthetic event:They act as a cross-browser wrapper around the browser’s native event thus combining the
+            behavior of different browsers into one API. Their purpose is to ensure that the events show consistent
+            properties across different browsers.</li>
+    </ul>
+    <h1>keys: Keys help React identify which items have changed, are added, or are removed. Keys should be given to the
+        elements inside the array to give the elements a stable identity</h1>
+    <ul>
+        <li>&lt;li key={index}&gt;</li>
+    </ul>
+    <h1>lifting state up</h1>
+    <ul>
+        <li>sharing state is accomplished by moving it up to the closest common ancestor of the components that need it
+        </li>
+        <li>We will remove the local state from the children and move it into the common parent instead</li>
+    </ul>
+    <h1>Composition vs Inheritance</h1>
+    <ul>
+        <li>React has a powerful composition model, and we recommend using composition instead of inheritance to reuse
+            code between components</li>
+        <li>Some components don’t know their children ahead of time. This is especially common for components</li>
+        <li>
+            <pre>
+                <div class="child-compoent">
+                    child:{props.children}
+                </div>
+                
+                <Child>
+                    <p>sjskjkd. it will b</p>
+                </Child>
+            </pre>
+        </li>
+    </ul>
+    <h1>Code-Splitting</h1>
+    <ul>
+        <li>Bundling is great, but as your app grows, your bundle will grow too. Especially if you are including large
+            third-party libraries. You need to keep an eye on the code you are including in your bundle so that you
+            don’t accidentally make it so large that your app takes a long time to load</li>
+        <li>const OtherComponent = React.lazy(() => import('./OtherComponent'));</li>
+        <li>
+            <pre>
+            <Suspense fallback={<div>Loading..</div>}>
+            <OtherComponent />
+            </Suspense>
+            </pre>
+        </li>
+        <li>route based code splitting: const Home = lazy(() => import('./routes/Home'));
+        </li>
+    </ul>
+    <h1>Strict mode checks are run in development mode only; they do not impact the production build.</h1>
+    <h1>Context: it provides a way to pass data through the component tree without having to pass props down manually at
+        every level</h1>
+    <ul>
+        <li>const ThemeContext = React.createContext('light'); // light is default value</li>
+        <li>
+            <pre>
+            <ThemeContext.Provider value="dark"> //passing dark 
+                <Toolbar />
+              </ThemeContext.Provider>
+        </pre>
+        </li>
+        <li>contextType property on a class can be assigned a Context object created by React.createContext()</li>
+        <li>
+            <pre>
+            static contextType = ThemeContext;
+            <Button theme={this.context}></Button> // in sub child
+        </pre>
+        </li>
+    </ul>
+    <h1>error handling</h1>
+    <ul>
+        <li>JavaScript errors inside components used to corrupt React’s internal state and cause it to emit cryptic
+            errors on next renders. These errors were always caused by an earlier error in the application code, but
+            React did not provide a way to handle them gracefully in components, and could not recover from them</li>
+        <li>
+            <pre>
+                    class ErrorBoundary extends React.Component {
+                        constructor(props) {
+                          super(props);
+                          this.state = { hasError: false };
+                        }
+                      
+                        static getDerivedStateFromError(error) {
+                          // Update state so the next render will show the fallback UI.
+                          return { hasError: true };
+                        }
+                      
+                        componentDidCatch(error, errorInfo) {
+                          // You can also log the error to an error reporting service
+                          logErrorToMyService(error, errorInfo);
+                        }
+                      
+                        render() {
+                          if (this.state.hasError) {
+                            // You can render any custom fallback UI
+                            return <h1>Something went wrong.</h1>;
+                          }
+                      
+                          return this.props.children; 
+                        }
+                      }
+                </pre>
+        </li>
+    </ul>
+    <h1>refs and the dome</h1>
+    <ul>
+        <li>Refs provide a way to access DOM nodes or React elements created in the render method.</li>
+        <li>this.myRef = React.createRef()</li>
+        <li>
+            <pre><div ref={this.myRef} /></pre>
+        </li>
+        <li>you should not use ref in functional component</li>
+    </ul>
+    <h1>fragments: A common pattern in React is for a component to return multiple elements. Fragments let you group a
+        list of children without adding extra nodes to the Dom</h1>
+    <h1>Higher-Order Components</h1>
+    <ul>
+        <li>Concretely, a higher-order component is a function that takes a component and returns a new component</li>
+        <li>A higher-order component (HOC) is an advanced technique in
+            React for reusing component logic. HOCs are not part of the React API, per se. They are a pattern that
+            emerges
+            from React’s compositional natureOM.</li>
+        <li>const EnhancedComponent = higherOrderComponent(WrappedComponent);</li>
+    </ul>
+    <h1>controlled vs uncontrolled component</h1>
+    <ul>
+        <li>
+            In a controlled component, form data is handled by a React component
+        </li>
+        <li>uncontrolled components, where form data is handled by the DOM itself.</li>
+    </ul>
+    <h1>functional life cycle hooks</h1>
+    <ul>
+        <li>const [count,setCount]=useState(0); setCount(count+1)</li>
+        <li>useEffect(()=>{
+            document.title = "hello"// Similar to componentDidMount and componentDidUpdate:
+            return () => {
+            // it is like unmount
+            ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
+            };
+            });
+        </li>
+        <li>myContext = React.createContext();<ContextName.Provider value="aa"></ContextName.Provider> ;const val = useContext(myContext); </li>
+        <li>const [state, dispatch] = useReducer(reducer, initialArg, init);</li>
+        <li>useReducer is usually preferable to useState when you have complex state logic that involves multiple
+            sub-values or when the next state depends on the previous one</li>
+        <li>
+            <pre>
+                const initialState = {count: 0};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return {count: state.count + 1};
+    case 'decrement':
+      return {count: state.count - 1};
+    default:
+      throw new Error();
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  return (
+    <>
+      Count: {state.count}
+      <button onClick={() => dispatch({type: 'decrement'})}>-</button>
+      <button onClick={() => dispatch({type: 'increment'})}>+</button>
+    </>
+  );
+}
+            </pre>
+        </li>
+        <li>const memoizedCallback = useCallback(
+            () => {
+            doSomething(a, b);
+            },
+            [a, b],
+            );</li>
+        <li>Pass an inline callback and an array of dependencies.While useCallback is used to memoize functions.
+            useCallback will return a memoized version of the
+            callback that only changes if one of the dependencies has changed. This is useful when passing callbacks to
+            optimized child components that rely on reference equality to prevent unnecessary renders</li>
+        <li>useMemo is used to memoize values. const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);</li>
+        <li>Pass a “create” function and an array of dependencies. useMemo will only recompute the memoized value when
+            one of the dependencies has changed. This optimization helps to avoid expensive calculations on every
+            render.
+
+            Remember that the function passed to useMemo runs during rendering. Don’t do anything there that you
+            wouldn’t normally do while rendering. For example, side effects belong in useEffect, not useMemo.</li>
+        <li>function TextInputWithFocusButton() {
+            const inputEl = useRef(null);
+            const onButtonClick = () => {
+            // `current` points to the mounted text input element
+            inputEl.current.focus();
+            };
+            return (
+            <>
+                <input ref={inputEl} type="text" />
+                <button onClick={onButtonClick}>Focus the input</button>
+            </>
+            );
+            }</li>
+        <li>
+            <pre>function FancyInput(props, ref) {
+                    const inputRef = useRef();
+                    useImperativeHandle(ref, () => ({
+                      focus: () => {
+                        inputRef.current.focus();
+                      }
+                    }));
+                    return <input ref={inputRef} ... />;
+                  }
+                  FancyInput = forwardRef(FancyInput);</pre>
+        </li>
+        <li>useImperativeHandle customizes the instance value that is exposed to parent components when using ref. As
+            always, imperative code using refs should be avoided in most cases. useImperativeHandle should be used with
+            forwardRef:
+
+        </li>
+        <li>useLayoutEffect:
+            The signature is identical to useEffect, but it fires synchronously after all DOM mutations. Use this to
+            read layout from the DOM and synchronously re-render. Updates scheduled inside useLayoutEffect will be
+            flushed synchronously, before the browser has a chance to paint.
+
+            Prefer the standard useEffect when possible to avoid blocking visual updates</li>
+        <li>
+            <pre>
+                function useFriendStatus(friendID) {
+                    const [isOnline, setIsOnline] = useState(null);
+                  
+                    // ...
+                  
+                    // Show a label in DevTools next to this Hook
+                    // e.g. "FriendStatus: Online"
+                    useDebugValue(isOnline ? 'Online' : 'Offline');
+                  
+                    return isOnline;
+                  }
+            </pre>
+        </li>
+        <li>useDebugValue can be used to display a label for custom hooks in React DevTools.
+
+            For example, consider the useFriendStatus custom Hook described in “Building Your Own Hooks”:</li>
+    </ul>
+
+    <h1>class life cycle hooks</h1>
+    <h3>creating time</h3>
+    <li>constructor()</li>
+    <li>static getDerivedStateFromProps()</li>
+    <li>render()</li>
+    <li>componentDidMount()</li>
+    <h3>updatng</h3>
+    <li>static getDerivedStateFromProps()</li>
+    <li>shouldComponentUpdate()</li>
+    <li>render()</li>
+    <li>getSnapshotBeforeUpdate()</li>
+    <li>componentDidUpdate()</li>
+    <h3>destory</h3>
+    <li>componentWillUnmount</li>
+
+</div>
+
+<div>
+    <h1>react router</h1>
+    <ul>
+        <li>React Router is the standard routing library for keeps your UI in sync with the URL.</li>
+        <li>lazy code loading, dynamic route matching, and location transition handling built right in</li>
+        <li>browserHistory uses the HTML5 History API when available, and falls back to full refreshes otherwise.
+            browserHistoryrequires additional configuration on the server side to serve up URLs, but is the generally
+            preferred solution for modern web pages.
+
+            hashHistory uses URL hashes, along with a query key to keep track of state. hashHistory requires no
+            additional server configuration, but is generally less preferred than browserHistory</li>
+        <li>import { Route, Link, BrowserRouter as Router } from 'react-router-dom' </li>
+        <li>
+            <pre>
+                <Router>  
+                    <div>  
+                      <h1>React Router Example</h1>  
+                      <Route path="/" component={App} />  
+                      <Route path="/about" component={About} />  
+                      <Route path="/contact" component={Contact} />  
+                    </div>  
+                  </Router>  
+            </pre>
+        </li>
+        <li>Now, we need to add some styles to the Link. So that when we click on any particular link, it can be easily
+            identified which Link is active. To do this react router provides a new trick NavLink instead of Link.</li>
+        <li>The Link component allows navigating the different routes on the websites, whereas NavLink component is used
+            to add styles to the active routes</li>
+        <li>The <Switch> component is used to render components only when the path will be matched. Otherwise, it
+                returns to the not found component</li>
+        <li>A <Redirect> component is used to redirect to another route in our application to maintain the old URLs. It
+                can be placed anywhere in the route hierarchy</li>
+        <li>auth guard: https://blog.netcetera.com/how-to-create-guarded-routes-for-your-react-app-d2fe7c7b6122</li>
+    </ul>
+</div>
+
+<div>
+    <h1>redux</h1>
+    <ul>
+        <li>
+            import { createStore } from "redux";
+            import rootReducer from "../reducers/index";
+
+            const store = createStore(rootReducer);
+
+            export default store;
+        </li>
+        <li>Redux reducer is just a JavaScript function. It takes two parameters: the current state and action</li>
+        <li>principle of Redux says the only way to change the state is by sending a signal to the store. This signal is
+            an action. So "dispatching an action" means sending out a signal to the store</li>
+        <li>Redux actions are nothing more than JavaScript objects</li>
+        <li>
+            {
+            type: 'ADD_ARTICLE',
+            payload: { title: 'React Redux Tutorial', id: 1 }
+            }
+
+        </li>
+        <li>The type property drives how the state should change and it's always required by Redux. The payload property
+            instead describes what should change, and might be omitted if you don't have new data to save in the store
+        </li>
+        <li>
+            export function addArticle(payload) {
+            return { type: "ADD_ARTICLE", payload }
+            };
+        </li>
+        <li>how does a reducer know when to generate the next state? The key here is the Redux store. When an action is
+            dispatched, the store forwards a message (the action object) to the reducer.</li>
+        <li>At this point the reducer says "oh, let's look at the type property of this action". Then depending on the
+            action type, the reducer produces the next state, eventually merging the action payload into the new state.
+        </li>
+        <li>reducer breaks the main Redux principle: immutability.</li>
+        <li>
+            You might be surprised to know that Redux itself is a small library (2KB) and the most important methods are
+            just three:
+            <ul>
+                <li>getState for reading the current state of the application</li>
+                <li>dispatch for dispatching an action</li>
+                <li>subscribe for listening to state changes</li>
+            </ul>
+            <ul>
+                <li>You will use connect with two or three arguments depending on the use case:</li>
+
+                <li> a mapStateToProps function (you can name it also "select")</li>
+                <li> a mapDispatchToProps function</li>
+                <li>As you can see Provider wraps up your React application and makes it aware of the entire Redux's
+                    store.</li>
+                <li>connecting a React component with Redux is connect. Connect takes at least one argument</li>
+                <li>Redux middleware is a function that is able to intercept, and act accordingly, our actions, before
+                    they reach the reducer.</li>
+                <li>Asynchronous actions in Redux with Redux Thunk</li>
+                <li>redux-thunk (it's a middleware) we can overcome the problem and return functions from action
+                    creators. This way we can call APIs, delay the dispatch of an action,</li>
+            </ul>
+        </li>
+    </ul>
+    <h1>useCallBack</h1>
+    <ul>
+        <li>
+            <pre>import React from 'react';
+
+                function MyComponent() {
+                  // handleClick is re-created on each render
+                  const handleClick = () => {
+                    console.log('Clicked!');
+                  };
+                
+                  // ...
+                }</pre>
+                <li>handleClick is a different function object on every rendering of MyComponent.
+
+                    Because inline functions are cheap, the re-creation of functions on each rendering is not a problem. A few inline functions per component are acceptable.
+                    
+                    </li>
+        </li>
+    </ul>
+</div>
+
+<!-- extra points -->
+<ul>
+    <li>should not up state in constructor,component will mount</li>
+    <li>constructor will throw an error for state update. it will not rerender for the state update</li>
+    <li>componentWillmount will not rerender and if you use ssr it will be run both server and client</li>
+    <li>getDervidedStateFromProps is static becuase it will not allowed for state update and This method doesn’t have access to the component instance.</li>
+</ul>
